@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categories,Author,Post,Course,Videos,Levels,Enrollment,requirements,what_you_learn,Lessons,Submission,Score,Assignment
+from .models import Categories,Student,Author,Post,Course,Videos,Levels,Enrollment,requirements,what_you_learn,Lessons,Submission,Score,Assignment
 
 class what_you_learn_TabularInline(admin.TabularInline):
     model = what_you_learn
@@ -22,6 +22,8 @@ admin.site.register(Assignment)
 admin.site.register(Lessons)
 admin.site.register(Post)
 admin.site.register(Enrollment)
+admin.site.register(Student)
+
 
 
 
