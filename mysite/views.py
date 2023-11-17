@@ -154,7 +154,11 @@ def profile_update(request):
 def course_detalis(request,slug):
 
       course = Course.objects.filter(slug=slug)
+<<<<<<< HEAD
       obj = Enrollment.objects.filter(course=course[0]).exists()
+=======
+      obj = Enrollment.objects.filter(user=request.user,course=course[0]).exists()
+>>>>>>> fa9d9ec78eb1a1a31753683683735a616dbd14c4
       print(obj,course[0])
       assign_discuss=False
       if obj:

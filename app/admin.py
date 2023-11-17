@@ -22,6 +22,8 @@ admin.site.register(Assignment)
 admin.site.register(Lessons)
 admin.site.register(Post)
 admin.site.register(Enrollment)
+admin.site.register(Student)
+
 
 
 
