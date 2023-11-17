@@ -148,3 +148,11 @@ class Score(models.Model):
 
     def __str__(self):
         return str(self.user_detail)
+class Student(models.Model):
+
+    name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    def __str__(self):
+        return str(self.name)

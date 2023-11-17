@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categories,Author,Post,Course,Videos,Levels,Enrollment,requirements,what_you_learn,Lessons,Submission,Score,Assignment
+from .models import Categories,Student,Author,Post,Course,Videos,Levels,Enrollment,requirements,what_you_learn,Lessons,Submission,Score,Assignment
 
 class what_you_learn_TabularInline(admin.TabularInline):
     model = what_you_learn
