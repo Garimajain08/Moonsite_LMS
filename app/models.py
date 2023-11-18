@@ -155,8 +155,8 @@ class Student(models.Model):
     mobile = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     def __str__(self):
-<<<<<<< HEAD
+
         return str(self.name)
-=======
-        return str(self.name)
->>>>>>> fa9d9ec78eb1a1a31753683683735a616dbd14c4
+
+
+
