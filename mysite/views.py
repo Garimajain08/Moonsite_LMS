@@ -11,7 +11,13 @@ def base(request):
     return render(request,'base.html')
 def logoutpage(request):
     logout(request)
-    return render(request,'main/index.html')
+    category = Categories.objects.all ()
+    course = Course.objects.all ()
+    teacher = Author.objects.all ()
+    print ( "categories only after login", category )
+    print ( teacher )
+
+    return render ( request, 'main/index.html', {"category": category, "course": course, "teacher": teacher} )
 def contact(request):
     category = Categories.objects.all ()
     course = Course.objects.all ()
@@ -19,11 +25,7 @@ def contact(request):
         name = request.object.get(name)
         email = request.object.get ( email)
         message = request.object.get(message)
-        obj =Contact(name=name,email=email,)
-
-
-
-        print("dsa")
+        obj =Contact(name=name,email=email)
     return render(request,'main/contact.html',{"category":category,"course":course})
 def aboutus(request):
     category = Categories.objects.all ()
@@ -33,14 +35,14 @@ def home(request):
     category = Categories.objects.all()
     course = Course.objects.all()
     teacher = Author.objects.all()
+    print("categories only after login",category)
     print(teacher)
     return render(request,'main/index.html',{"category":category,"course":course,"teacher":teacher})
 def course(request):
     category = Categories.objects.all()
     levels = Levels.objects.all()
+    print("Rimmimimim")
     course = Course.objects.all()
-
-
     return render(request,'main/single_course.html',{'categories':category,'levels':levels,"course":course,"category":category})
 def filter_courses(request):
     category = request.GET.getlist('category[]')
@@ -150,24 +152,28 @@ def profile_update(request):
 
         return redirect ( 'home' )
 def course_detalis(request,slug):
-    course = Course.objects.filter(slug=slug)
-    obj = Enrollment.objects.filter(user=request.user,course=course[0]).exists()
-    print(obj,course[0])
-    assign_discuss=False
-    if obj:
+
+      course = Course.objects.filter(slug=slug)
+      obj = Enrollment.objects.filter(course=course[0]).exists()
+      print(obj,course[0])
+      assign_discuss=False
+      if obj:
 
         assign_discuss=True
 
-    if course.exists():
+      if course.exists():
         course = course.first()
-    else:
+      else:
         return redirect('error')
-    return render (request,'course/course_detail.html',{'course':course,"assign_discuss":assign_discuss})
+      return render (request,'course/course_detail.html',{'course':course})
+
+
+
 def page_not_found(request):
     return render(request,'error/404.html')
 def discuss(request,slug):
     course = Course.objects.filter ( slug=slug )[0]
-    queries = Post.objects.filter(course=course) 
+    queries = Post.objects.filter(course=course)
     form = PostForm
     if(request.method=="POST"):
         form = PostForm ( request.POST )
@@ -190,13 +196,11 @@ def discuss(request,slug):
 def assignment(request,slug):
     course = Course.objects.filter ( slug=slug )[0]
     assignment = Assignment.objects.filter(course = course)[0]
-    enrolled = Enrollment.objects.filter(user = request.user,course=course).exists()
-    if enrolled:
-      score= Score.objects.filter(user_detail=request.user,assignment=assignment,course=course).exists()
-      if score:
+    score= Score.objects.filter(user_detail=request.user,assignment=assignment,course=course).exists()
+    if score:
         grad = Score.objects.get(user_detail=request.user,assignment=assignment,course=course)
         score=grad.grades
-      else:
+    else:
         score="Assignment not submitted"
     if request.method=="POST":
         user = request.user
@@ -212,7 +216,7 @@ def enrollment(request,slug):
         user = request.user
         print(user)
         print(course)
-        student = Enrollment.objects.filter(user=user,course = course).exists()
+        student = Enrollment.objects.filter(course = course).exists()
         if student:
             pass
         else:
